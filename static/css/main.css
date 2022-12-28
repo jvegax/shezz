@@ -2,7 +2,16 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: #303030;
+  background-color: #5472fb;
   color: #fff;
-  font-family: 'Unbounded', cursive;
+  font-family: "Unbounded", cursive;
+}
+
+.main-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  text-align: center;
+  margin: 1rem;
 }
