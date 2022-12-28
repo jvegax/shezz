@@ -2,4 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background-color: #303030;
+  color: #fff;
+  font-family: 'Unbounded', cursive;
 }
