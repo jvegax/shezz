@@ -2,16 +2,73 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: #5472fb;
-  color: #fff;
   font-family: "Unbounded", cursive;
 }
 
-.main-title {
+.main-container {
+  display: flex;
+  height: 100vh;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+/* Left side */
+.left-container {
+  display: flex;
+  flex-direction: column;
+  flex: 0.6;
+  padding: 2rem;
+  color: #fff;
+  background-color: #5472fb;
+  box-shadow: 0 0 60px #5472fb;
+}
+
+.logo-container {
+  flex: 0.1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  /* border: 1px solid #fff; */
+}
+
+.logo-container img {
+  width: 250px;
+  height: auto;
+  cursor: pointer;
+}
+
+.description-container {
+  flex: 0.3;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1rem;
-  text-align: center;
-  margin: 1rem;
+  font-size: 1.6em;
+  line-height: 1.5em;
+  /* border: 1px solid #fff; */
+}
+
+.description-container span {
+  font-size: 1.2em;
+  font-weight: 900;
+  background-color: #fff;
+  color: #5472fb;
+}
+
+.steps-container {
+  flex: 0.6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid #fff; */
+}
+
+.steps-container img {
+  width: 100%;
+  height: auto;
+}
+
+.right-container {
+  flex: 0.3;
+  color: #5472fb;
+  padding: 2rem;
 }
