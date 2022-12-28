@@ -1,0 +1,13 @@
+.env
+
+*.pyc
+*.pyo
+*.pyd
+
+__pycache__
+
+migrations/
+
+local_settings.py
+
+db.sqlite3
