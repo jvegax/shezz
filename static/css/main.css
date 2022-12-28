@@ -7,9 +7,9 @@
 
 .main-container {
   display: flex;
-  height: 100vh;
   flex-direction: row;
   flex-wrap: wrap;
+  height: 100vh;
 }
 
 /* Left side */
@@ -108,7 +108,8 @@
 }
 
 .middle-container input {
-  width: 60%;
+  width: 90%;
+  text-align: center;
   height: 3rem;
   border: 1px solid #5472fb;
   border-radius: 5px;
@@ -118,11 +119,79 @@
 }
 
 .select-input {
-  width: 60%;
+  width: 90%;
+  text-align: center;
   height: 3rem;
   border: 1px solid #5472fb;
   border-radius: 5px;
   padding: 0 1rem;
   font-size: 1em;
   margin-bottom: 1rem;
+}
+
+.payment-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 300% 300%;
+  color: #fff;
+  font-size: 1.4em;
+  font-weight: 900;
+  animation: gradient 2.5s ease infinite;
+  border-radius: 8px;
+  padding: 1em;
+  height: 5rem;
+  width: 90%;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  outline: none;
+
+  display: inline-block; /* Make the element an inline block */
+}
+
+.stripe-button {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+  height: 5rem;
+  width: 90%;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid #5472fb;
+  border-radius: 8px;
+  outline: none;
+  font-size: 1.4em;
+  font-weight: 900;
+  color: #5472fb;
+}
+
+a {
+  text-decoration: none;
+}
+
+.stripe-button:hover {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.payment-button:hover {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+    transform: scale(1);
+  }
+  50% {
+    background-position: 100% 50%;
+    transform: scale(1.05);
+  }
+  100% {
+    background-position: 0% 50%;
+    transform: scale(1);
+  }
 }
