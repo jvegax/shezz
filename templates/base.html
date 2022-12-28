@@ -43,9 +43,32 @@
         </div>
       </div>
       <div class="right-container">
-        <div class="top-container">a</div>
-        <div class="middle-container">a</div>
-        <div class="offers-button">a</div>
+        <div class="top-container"><h1>¿Qué tengo que hacer? 🤔</h1></div>
+        <div class="middle-container">
+          <h2>Paso 1 ━ Datos de contacto</h2>
+          <p>Nombre y apellidos</p>
+          <input type="text" placeholder="Nombre, apellidos" />
+          <p>Ingresa tu correo electrónico</p>
+          <input type="email" placeholder="example@gmail.com" />
+
+          <h2>Paso 2 ━ Que producto buscas</h2>
+          <p>Talla</p>
+          <select class="select-input" name="talla" id="talla">
+            <option value="xxs">XXS</option>
+            <option value="xs">XS</option>
+            <option value="s">S</option>
+            <option value="m">M</option>
+            <option value="l">L</option>
+            <option value="xl">XL</option>
+            <option value="xxl">XXL</option>
+          </select>
+          <p>Producto</p>
+          <select class="select-input" name="product" id="product">
+            <option value="top">Vestidos</option>
+            <option value="xs">Tops</option>
+          </select>
+        </div>
+        <div class="offers-button"></div>
       </div>
     </div>
     <script src="{% static 'js/main.js' %}"></script>
