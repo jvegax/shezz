@@ -151,6 +151,22 @@
   display: inline-block; /* Make the element an inline block */
 }
 
+.made-by {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 0.9rem;
+  background-color: rgb(53, 53, 53);
+  font-family: sans-serif;
+  font-size: 14px;
+  color: #fff;
+  border-radius: 0 8px 0 0;
+}
+
+.made-by a {
+  color: #5472fb;
+}
+
 .stripe-button {
   margin-top: 1rem;
   display: flex;
