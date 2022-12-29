@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+    href="https://fonts.googleapis.com/css2?family=Unbounded&display=swap"
+    rel="stylesheet"
+    />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'img/brand/favicon.png' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin/main.css' %}" />
+    <title>Shezz - Admin site</title>
+</head>
+<body>
+    <div class="main-container">
+        <div class="shein-container">
+            <h1>
+                Shein scrapp
+            </h1>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="url" placeholder="Enter url" />
+                <input type="submit" value="Scrap shein" />
+            </form>
+        </div>
+    </div>
+</body>
+</html>
