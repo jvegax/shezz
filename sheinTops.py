@@ -54,7 +54,7 @@ with open(SHEIN_TOPS_LINKS_PATH, 'r') as file:
 
 # Itera sobre cada enlace
 for link in links:
-    if counter == 5:
+    if counter == 1000:
         break
     NEW_SHEIN_TOP = {}
 
@@ -148,9 +148,8 @@ for link in links:
         'sizes': sizes,
         'images': images
     }
-    print(NEW_SHEIN_TOP)
     ALL_SHEIN_TOPS.append(NEW_SHEIN_TOP) 
-    print('✨ New top added 😎 ✨')
+    print(f'✨ New top added 😎 ({counter+1}) ✨')
     counter += 1
     
 # Cerramos el driver
