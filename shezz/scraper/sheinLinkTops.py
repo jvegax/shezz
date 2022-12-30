@@ -1,3 +1,5 @@
+# Este script obtiene los links de +2000 tops de Shein
+
 from selenium.webdriver import Chrome, ChromeOptions
 from bs4 import BeautifulSoup
 import ssl
