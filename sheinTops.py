@@ -38,6 +38,8 @@ SHEIN_ITEM_IMAGE_CLASS = 'j-verlok-lazy loaded'
 
 # ***************************************************************************************************
 
+ALL_SHEIN_TOPS = []
+counter = 0
 
 def normalize_rating(raw_rating):
     match = re.search(r"Valoración media\s([0-9.]+)", raw_rating)
@@ -52,6 +54,9 @@ with open(SHEIN_TOPS_LINKS_PATH, 'r') as file:
 
 # Itera sobre cada enlace
 for link in links:
+    if counter == 5:
+        break
+    NEW_SHEIN_TOP = {}
 
     # Driver configuration
     options = ChromeOptions()
@@ -66,7 +71,7 @@ for link in links:
     name = ''
     price_discount = ''
     price_original = ''
-    category = ''
+    category = 'tops'
     rating = ''
     product_link = link
     sizes = []
@@ -121,5 +126,43 @@ for link in links:
     if sizes_soup:
         for size in sizes_soup:
             sizes.append(size.text.strip())
+            
+    # Images
+    images_soup = soup.findAll("img", {"class": SHEIN_ITEM_IMAGE_CLASS})
+    if images_soup:
+        for image in images_soup:
+            # discard if image doesn't end in a .webp extension
+            if image.get('src').endswith('.webp'):
+                images.append('https:'+image.get('src'))
+        
     
-    print(f'✨ {sku} - sizes: {sizes}')
+    # Guardamos los datos en un diccionario
+    NEW_SHEIN_TOP = {
+        'sku': sku,
+        'name': name,
+        'price_discount': price_discount,
+        'price_original': price_original,
+        'category': category,
+        'rating': rating,
+        'product_link': product_link,
+        'sizes': sizes,
+        'images': images
+    }
+    print(NEW_SHEIN_TOP)
+    ALL_SHEIN_TOPS.append(NEW_SHEIN_TOP) 
+    print('✨ New top added 😎 ✨')
+    counter += 1
+    
+# Cerramos el driver
+# Close driver and links file
+driver.close()
+driver.quit()
+
+# Abrir un archivo para escritura
+with open('tops.json', 'w') as tops_file:
+  # Escribir la lista en el archivo como una cadena JSON
+  json.dump(ALL_SHEIN_TOPS, tops_file, indent=2)
+  
+
+     
+    

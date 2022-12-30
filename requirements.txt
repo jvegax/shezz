@@ -5,6 +5,8 @@ autopep8==2.0.1
 beautifulsoup4==4.11.1
 certifi==2022.12.7
 charset-normalizer==2.1.1
+chromedriver-binary==109.0.5414.25.0
+chromedriver-py==109.0.5414.25
 Django==4.1.4
 h11==0.14.0
 idna==3.4
