@@ -115,5 +115,11 @@ for link in links:
             "del", {"class": SHEIN_OFFER_ITEM_ORIGINAL_PRICE_CLASS})
         if price_original_soup:
             price_original = price_original_soup.text.strip()
+            
+    # Sizes
+    sizes_soup = soup.findAll("div", {"class": SHEIN_ITEM_SIZE_CLASS})
+    if sizes_soup:
+        for size in sizes_soup:
+            sizes.append(size.text.strip())
     
-    print(f'✨ {sku} - {rating} - Descuento: {price_discount} - Precio original: {price_original}')
+    print(f'✨ {sku} - sizes: {sizes}')
