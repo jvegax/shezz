@@ -92,5 +92,28 @@ for link in links:
             rating = normalize_rating(text)
 
     # Price
+    price_original_soup = soup.find(
+        "div", {"class": SHEIN_ITEM_PRICE})
+    if price_original_soup:
+        price_original_span_soup = price_original_soup.find('span')
+        if price_original_span_soup:
+            price_original = price_original_span_soup.text.strip()
+            price_discount = 'unknown'
+    else:
+        # Case product has discount
 
-    print(f'✨ Nombre: {name} - {sku} - {rating}')
+        # Get discount
+        price_discount_soup = soup.find(
+            "div", {"class": SHEIN_OFFER_ITEM_DISCOUNT_CLASS})
+        if price_discount_soup:
+            # find first span > get text value (discount)
+            discount_span_soup = price_discount_soup.find('span')
+            if discount_span_soup:
+                price_discount = discount_span_soup.text.strip()
+        # Get original price
+        price_original_soup = soup.find(
+            "del", {"class": SHEIN_OFFER_ITEM_ORIGINAL_PRICE_CLASS})
+        if price_original_soup:
+            price_original = price_original_soup.text.strip()
+    
+    print(f'✨ {sku} - {rating} - Descuento: {price_discount} - Precio original: {price_original}')
