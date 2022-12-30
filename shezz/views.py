@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .scraper import scrap_links_tops_shein
+from .scraper.sheinLinkTops import scrap_links_tops_shein
 
 # Create your views here.
 
