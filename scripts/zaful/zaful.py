@@ -51,7 +51,7 @@ with open(ZAFUL_TOPS_LINKS_PATH, 'r') as file:
 
     # Itera sobre cada enlace
     for link in links:
-        if counter == 10:
+        if counter == 1000:
             break
         NEW_ZAFUL_TOP = {}
 
