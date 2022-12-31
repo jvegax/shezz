@@ -1,6 +1,8 @@
 # Descripcion: Este script combina los datos de dos archivos .json en uno solo
 
 import json
+import random
+
 
 SHEIN_TOPS_FILE_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/shein/tops-shein.json'
 ZAFUL_TOPS_FILE_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/zaful/zaful-tops.json'
@@ -15,6 +17,9 @@ with open(ZAFUL_TOPS_FILE_PATH, "r") as f:
 
 # Creamos una nueva estructura de datos que combina los datos de ambos archivos
 combined_data = shein_tops + zaful_tops
+
+# Desordenamos la lista de datos combinada
+random.shuffle(combined_data)
 
 # Escribimos la estructura de datos combinada a un nuevo archivo .json
 with open(SAVE_FILE_PATH, "w") as f:
