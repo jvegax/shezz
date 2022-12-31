@@ -1,69 +1,54 @@
-# Descripcion: genera el indice de busqueda de whoosh para los items de shein
-from whoosh.fields import FieldType, Schema, TEXT, ID, STORED
-from whoosh.analysis import StandardAnalyzer
 from whoosh.index import create_in, open_dir
-from whoosh.qparser import QueryParser
-import json
+from whoosh.fields import Schema, TEXT, DATETIME, ID
+from whoosh.qparser import QueryParser, MultifieldParser, OrGroup
+import json, shutil, os, sys
+
+arguments = sys.argv
+SHEIN_INDEX_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/Index'
+SHEIN_TOPS_DATA_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/tops-shein.json'
 
 # Creamos un esquema para nuestros documentos
 def create_shein_schema():
-    # Creamos un nuevo tipo de campo llamado 'NAME'
-    NAME = FieldType(format=TEXT, stored=True, analyzer=StandardAnalyzer())
-    
-    # Creamos un nuevo tipo de campo llamado 'ID'
-    ID_TYPE = FieldType(format=ID , stored=True, analyzer=StandardAnalyzer())
-
-    # Creamos un nuevo tipo de campo llamado 'STORED'
-    STORED_TYPE = FieldType(format=STORED, stored=True, analyzer=StandardAnalyzer())
-
     # Creamos un esquema para nuestros documentos utilizando los tipos de campo que acabamos de crear
     schema = Schema(
-        name=NAME(name="name"),
-        sku = STORED_TYPE(name="sku"),
-        price_discount=STORED_TYPE(name="price_discount"),
-        price_original=STORED_TYPE(name="price_original"),
-        category=STORED_TYPE(name="category"),
-        rating=STORED_TYPE(name="rating"),
-        product_link=STORED_TYPE(name="product_link"),
-        sizes=STORED_TYPE(name="sizes"),
-        images=STORED_TYPE(name="images")
+        name=TEXT(stored=True, phrase=False),
+        sku = ID(stored=True),
+        price_discount=TEXT(stored=True),
+        price_original=TEXT(stored=True),
+        category=TEXT(stored=True),
+        rating=TEXT(stored=True),
+        product_link=TEXT(stored=False),
+        sizes=TEXT(stored=True),
+        images=TEXT(stored=False)
     )
+    
+    if os.path.exists(SHEIN_INDEX_PATH):
+        shutil.rmtree(SHEIN_INDEX_PATH)
+    os.mkdir(SHEIN_INDEX_PATH)
 
     # Creamos un índice en un directorio llamado "shein_index"
-    ix = create_in("shein_index", schema)
+    shein_ix = create_in(SHEIN_INDEX_PATH, schema)
+    writer = shein_ix.writer()
 
-    # Añadimos cada objeto como un documento al índice
-    writer = ix.writer()
-
-    with open("tops-mocked.json", "r") as tops_file:
+    with open(SHEIN_TOPS_DATA_PATH, "r") as tops_file:
         obj_list = json.load(tops_file)
         for obj in obj_list:
-            # Creamos un objeto Field para cada campo del objeto
-            sku_field = ID_TYPE(name="sku", value=obj['sku'])
-            name_field = NAME(name="name", value=obj['name'])
-            price_discount_field = STORED_TYPE(name="price_discount", value=obj['price_discount'])
-            price_original_field = STORED_TYPE(name="price_original", value=obj['price_original'])
-            category_field = STORED_TYPE(name="category", value=obj['category'])
-            rating_field = STORED_TYPE(name="rating", value=obj['rating'])
-            product_link_field = STORED_TYPE(name="product_link", value=obj['product_link'])
-            sizes_field = STORED_TYPE(name="sizes", value=obj['sizes'])
-            images_field = STORED_TYPE(name="images", value=obj['images'])
-            
-             # Añadimos los objetos Field al índice
-            writer.add_field(sku_field)
-            writer.add_field(name_field)
-            writer.add_field(price_discount_field)
-            writer.add_field(price_original_field)
-            writer.add_field(category_field)
-            writer.add_field(rating_field)
-            writer.add_field(product_link_field)
-            writer.add_field(sizes_field)
-            writer.add_field(images_field)
+            writer.add_document(
+                name=obj["name"],
+                sku=obj["sku"],
+                price_discount=obj["price_discount"],
+                price_original=obj["price_original"],
+                category=obj["category"],
+                rating=obj["rating"],
+                product_link=obj["product_link"],
+                sizes=obj["sizes"],
+                images=obj["images"]
+            )
         writer.commit()
 
 def search_shenin_index(query):
     # Abrimos el índice que acabamos de crear
-    shein_index = open_dir("shein_index")
+    shein_index = open_dir(SHEIN_INDEX_PATH)
 
     # Creamos un parseador de consultas para buscar por el campo 'name'
     query_parser = QueryParser("name", schema=shein_index.schema)
@@ -74,7 +59,8 @@ def search_shenin_index(query):
     # Ejecutamos la búsqueda y obtenemos los resultados
     with shein_index.searcher() as searcher:
         results = searcher.search(query_res)
-        for result in results:
-            print(result)
+        print("✅ Found {} results.".format(len(results)))
 
-create_shein_schema()
+# create_shein_schema()
+
+search_shenin_index(arguments[1])
