@@ -1,0 +1,1 @@
+En esta carpeta se incluyen los scripts para extraer productos de la web de Zaful y Shein usando Beautiful Soup
