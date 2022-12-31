@@ -1,15 +1,15 @@
 from whoosh.index import create_in, open_dir
 from whoosh.fields import Schema, TEXT, ID
-from whoosh.qparser import QueryParser, MultifieldParser, OrGroup
+from whoosh.qparser import QueryParser
 import json, shutil, os, sys
 
 arguments = sys.argv
 SHEIN_INDEX_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/whoosh/Index'
 SHEIN_TOPS_DATA_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/shein/tops-shein.json'
+ALL_PRODUCTS_DATA_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/all-products.json'
 
 # Creamos un esquema para nuestros documentos
 def create_shein_schema():
-    # Creamos un esquema para nuestros documentos utilizando los tipos de campo que acabamos de crear
     schema = Schema(
         name=TEXT(stored=True, phrase=False),
         sku = ID(stored=True),
@@ -17,9 +17,9 @@ def create_shein_schema():
         price_original=TEXT(stored=True),
         category=TEXT(stored=True),
         rating=TEXT(stored=True),
-        product_link=TEXT(stored=False),
+        product_link=TEXT(stored=True),
         sizes=TEXT(stored=True),
-        images=TEXT(stored=False)
+        images=TEXT(stored=True)
     )
     
     if os.path.exists(SHEIN_INDEX_PATH):
@@ -46,21 +46,17 @@ def create_shein_schema():
             )
         writer.commit()
 
-def search_shenin_index(query):
+def whoosh_search(param, query):
     # Abrimos el índice que acabamos de crear
     shein_index = open_dir(SHEIN_INDEX_PATH)
-
-    # Creamos un parseador de consultas para buscar por el campo 'name'
-    query_parser = QueryParser("name", schema=shein_index.schema)
-
-    # Creamos la consulta a partir de la cadena de texto que nos pasan `query`
+    query_parser = QueryParser(param, schema=shein_index.schema)
     query_res = query_parser.parse(query)
 
-    # Ejecutamos la búsqueda y obtenemos los resultados
     with shein_index.searcher() as searcher:
         results = searcher.search(query_res)
+        for result in results:
+            print(result)
         print("✅ Found {} results.".format(len(results)))
 
 # create_shein_schema()
-
-search_shenin_index(arguments[1])
+whoosh_search(arguments[1], arguments[2])
