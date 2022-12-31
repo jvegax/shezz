@@ -1,4 +1,4 @@
-# Description: Este script obtiene info de +2000 tops de Shein
+# Descripcion: Este script almacena +2000 tops de Shein en un archivo JSON
 
 from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.chrome.service import Service
@@ -11,7 +11,8 @@ import re
 ssl._create_default_https_context = ssl._create_unverified_context
 
 # Crea una instancia del servicio de ChromeDriver con la ruta al ejecutable
-service = Service('/usr/local/bin/chromedriver')
+CHROME_DRIVER_PATH = '/usr/local/bin/chromedriver'
+service = Service(CHROME_DRIVER_PATH)
 
 SHEIN_TOPS_LINKS_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/links-tops-shein.json'
 
@@ -40,6 +41,7 @@ SHEIN_ITEM_IMAGE_CLASS = 'j-verlok-lazy loaded'
 
 ALL_SHEIN_TOPS = []
 counter = 0
+
 
 def normalize_rating(raw_rating):
     match = re.search(r"Valoración media\s([0-9.]+)", raw_rating)
@@ -120,13 +122,13 @@ for link in links:
             "del", {"class": SHEIN_OFFER_ITEM_ORIGINAL_PRICE_CLASS})
         if price_original_soup:
             price_original = price_original_soup.text.strip()
-            
+
     # Sizes
     sizes_soup = soup.findAll("div", {"class": SHEIN_ITEM_SIZE_CLASS})
     if sizes_soup:
         for size in sizes_soup:
             sizes.append(size.text.strip())
-            
+
     # Images
     images_soup = soup.findAll("img", {"class": SHEIN_ITEM_IMAGE_CLASS})
     if images_soup:
@@ -134,8 +136,7 @@ for link in links:
             # discard if image doesn't end in a .webp extension
             if image.get('src').endswith('.webp'):
                 images.append('https:'+image.get('src'))
-        
-    
+
     # Guardamos los datos en un diccionario
     NEW_SHEIN_TOP = {
         'sku': sku,
@@ -148,10 +149,10 @@ for link in links:
         'sizes': sizes,
         'images': images
     }
-    ALL_SHEIN_TOPS.append(NEW_SHEIN_TOP) 
+    ALL_SHEIN_TOPS.append(NEW_SHEIN_TOP)
     print(f'✨ New top added 😎 ({counter+1}) ✨')
     counter += 1
-    
+
 # Cerramos el driver
 # Close driver and links file
 driver.close()
@@ -159,9 +160,5 @@ driver.quit()
 
 # Abrir un archivo para escritura
 with open('tops.json', 'w') as tops_file:
-  # Escribir la lista en el archivo como una cadena JSON
-  json.dump(ALL_SHEIN_TOPS, tops_file, indent=2)
-  
-
-     
-    
+    # Escribir la lista en el archivo como una cadena JSON
+    json.dump(ALL_SHEIN_TOPS, tops_file, indent=2)

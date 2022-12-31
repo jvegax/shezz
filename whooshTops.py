@@ -1,5 +1,5 @@
 from whoosh.index import create_in, open_dir
-from whoosh.fields import Schema, TEXT, DATETIME, ID
+from whoosh.fields import Schema, TEXT, ID
 from whoosh.qparser import QueryParser, MultifieldParser, OrGroup
 import json, shutil, os, sys
 
