@@ -4,8 +4,8 @@ from whoosh.qparser import QueryParser, MultifieldParser, OrGroup
 import json, shutil, os, sys
 
 arguments = sys.argv
-SHEIN_INDEX_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/Index'
-SHEIN_TOPS_DATA_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/tops-shein.json'
+SHEIN_INDEX_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/whoosh/Index'
+SHEIN_TOPS_DATA_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/shein/tops-shein.json'
 
 # Creamos un esquema para nuestros documentos
 def create_shein_schema():
