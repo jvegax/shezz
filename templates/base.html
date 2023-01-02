@@ -18,61 +18,7 @@
     </title>
   </head>
   <body>
-    <div class="main-container">
-      <div class="left-container">
-        <div class="logo-container">
-          <img
-            class="main-logo-img"
-            src="{% static 'img/brand/main-logo-white.png' %}"
-            alt="Shezz"
-          />
-        </div>
-        <div class="description-container">
-          <p>
-            ✨ A un solo clic de obtener
-            <span>los mejores chollos y ofertas</span> en vestidos, tops,
-            zapatillas y muchos más... ✨
-          </p>
-        </div>
-        <div class="steps-container">
-          <img
-            class="main-logo-img"
-            src="{% static 'img/precios-wallpaper.png' %}"
-            alt="Shezz"
-          />
-        </div>
-      </div>
-      <div class="right-container">
-        <div class="top-container"><h1>¿Qué tengo que hacer? 🤔</h1></div>
-        <div class="middle-container">
-          <h2>Paso 1 ━ Datos de contacto</h2>
-          <p>Nombre</p>
-          <input type="text" placeholder="Tu nombre" />
-          <p>Ingresa tu correo electrónico</p>
-          <input type="email" placeholder="example@gmail.com" />
-
-          <h2>Paso 2 ━ Selecciona un producto</h2>
-          <p>Producto</p>
-          <select class="select-input" name="product" id="product">
-            <option value="top">Vestidos</option>
-            <option value="xs">Tops</option>
-          </select>
-          <p>Talla</p>
-          <select class="select-input" name="talla" id="talla">
-            <option value="xxs">XXS</option>
-            <option value="xs">XS</option>
-            <option value="s">S</option>
-            <option value="m">M</option>
-            <option value="l">L</option>
-            <option value="xl">XL</option>
-            <option value="xxl">XXL</option>
-          </select>
-          <a href="#" class="payment-button">Obtener ofertas ━ Gratis</a>
-          <a href="#" class="stripe-button">Ofertas Premium ✨ ━ 2.99€</a>
-        </div>
-        <div class="offers-button"></div>
-      </div>
-    </div>
+    {% block content %} {% endblock %}
     <script src="{% static 'js/main.js' %}"></script>
   </body>
 </html>

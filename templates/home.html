@@ -1,0 +1,41 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="main-container">
+  <div class="left-container">
+    <div class="logo-container">
+      <img
+        class="main-logo-img"
+        src="{% static 'img/brand/main-logo-white.png' %}"
+        alt="Shezz"
+      />
+    </div>
+    <div class="description-container">
+      <p>
+        ✨ A un solo clic de obtener
+        <span>los mejores chollos y ofertas</span> en vestidos, tops, zapatillas
+        y muchos más... ✨
+      </p>
+    </div>
+    <div class="steps-container">
+      <img
+        class="main-logo-img"
+        src="{% static 'img/precios-wallpaper.png' %}"
+        alt="Shezz"
+      />
+    </div>
+  </div>
+  <div class="right-container">
+    <div class="top-container"><h1>¿Qué tengo que hacer? 🤔</h1></div>
+    <div class="middle-container">
+      <h2>Rellena tus preferencias</h2>
+      <form method="POST" action="/resultados/">
+        {% csrf_token %} {{ form.as_p }}
+        <input
+          type="submit"
+          class="payment-button"
+          value="Obtener ofertas ━ Gratis"
+        />
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+{% include "navbar.html" %}
+<div class="resultados-container">
+  <h1>✅ Coincidencias segun tus parametros: {{ matches }}</h1>
+
+  {% for product in results %}
+  <div class="resultados">
+    <div class="item">
+      <p>Nombre: {{ product.name }}</p>
+      <a href="{{ product.product_link }}">Link del producto</a>
+      <p>Precio: {{ product.price_original }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
