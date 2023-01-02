@@ -1,7 +1,7 @@
 # Descripcion: Este scritp contiene las funciones para busqueda sobre el indice de whoosh
 from whoosh.index import open_dir
 from whoosh.qparser import QueryParser
-from whoosh.query import NumericRange, Term
+from whoosh.query import NumericRange, Term, And
 import sys
 
 ARGS = sys.argv
@@ -41,5 +41,32 @@ def search_by_size(query):
             print(result["name"], result["sizes"])
         print("✅ Found {} results.".format(len(results)))
         
+def combinated_search(name_query, size_query, min_price, max_price):
+    # Abrimos el índice Whoosh
+    shezz_index = open_dir(SHEZZ_INDEX_PATH)
+    
+    # Creamos las consultas de búsqueda para cada campo
+    name_query_parser = QueryParser("name", schema=shezz_index.schema)
+    name_query_res = name_query_parser.parse(name_query)
+    
+    size_query_res = Term("sizes", size_query)
+    
+    price_range_query = NumericRange("price_original", min_price, max_price)
+    
+    # Creamos la consulta combinada utilizando la clase And
+    combined_query = And([name_query_res, size_query_res, price_range_query])
+    
+    # Realizamos la búsqueda utilizando la consulta combinada
+    with shezz_index.searcher() as searcher:
+        results = searcher.search(combined_query, limit=20, sortedby="price_original")
+        # Mostramos el número de resultados encontrados y los resultados en sí
+        print("✅ Found {} results.".format(len(results)))
+        for result in results:
+            print(result["name"], result["price_original"], result["sizes"])
+
+
+    
+        
 # search_by_price_range()
-search_by_size(ARGS[1])
+# search_by_size(ARGS[1])
+combinated_search(ARGS[1], ARGS[2], int(ARGS[3]), int(ARGS[4]))
