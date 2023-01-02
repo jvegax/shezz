@@ -1,6 +1,7 @@
-from whoosh.index import create_in, open_dir
+# Descripcion: este script genera el indice de whoosh
+
+from whoosh.index import create_in
 from whoosh.fields import Schema, TEXT, ID
-from whoosh.qparser import QueryParser
 import json, shutil, os, sys
 
 arguments = sys.argv
@@ -9,7 +10,7 @@ SHEIN_TOPS_DATA_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/
 ALL_PRODUCTS_DATA_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/all-products.json'
 
 # Creamos un esquema para nuestros documentos
-def create_shein_schema():
+def create_index():
     schema = Schema(
         name=TEXT(stored=True, phrase=False),
         sku = ID(stored=True),
@@ -46,17 +47,4 @@ def create_shein_schema():
             )
         writer.commit()
 
-def whoosh_search(param, query):
-    # Abrimos el índice que acabamos de crear
-    shein_index = open_dir(SHEIN_INDEX_PATH)
-    query_parser = QueryParser(param, schema=shein_index.schema)
-    query_res = query_parser.parse(query)
-
-    with shein_index.searcher() as searcher:
-        results = searcher.search(query_res)
-        for result in results:
-            print(result)
-        print("✅ Found {} results.".format(len(results)))
-
-# create_shein_schema()
-whoosh_search(arguments[1], arguments[2])
+create_index()
