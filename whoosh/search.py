@@ -2,8 +2,9 @@
 from whoosh.index import open_dir
 from whoosh.qparser import QueryParser
 from whoosh.query import NumericRange
+import sys
 
-
+ARGS = sys.argv
 SHEZZ_INDEX_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/whoosh/Index'
 
 
@@ -32,3 +33,5 @@ def search_by_price(range_query):
         for result in results:
             print(result)
         print("✅ Found {} results.".format(len(results)))
+        
+search_by_price(ARGS[1])
