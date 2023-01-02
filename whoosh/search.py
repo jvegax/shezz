@@ -1,7 +1,7 @@
 # Descripcion: Este scritp contiene las funciones para busqueda sobre el indice de whoosh
 from whoosh.index import open_dir
 from whoosh.qparser import QueryParser
-from whoosh.query import NumericRange
+from whoosh.query import NumericRange, Term
 import sys
 
 ARGS = sys.argv
@@ -18,16 +18,28 @@ def search_by_name(query):
         print("✅ Found {} results.".format(len(results)))
 
 
-def search_by_price():
+def search_by_price_range():
     # Abrimos el índice que acabamos de crear
     shezz_index = open_dir(SHEZZ_INDEX_PATH)
     # Crea una consulta de rango para buscar productos con precio entre 10 y 20 con whoosh version 2.7.4
-    numeric_range_query = NumericRange("price_original", 14, 15)
+    numeric_range_query = NumericRange("price_original", 12, 15)
     with shezz_index.searcher() as searcher:
-        results = searcher.search(numeric_range_query)
-        for result in results:
-            print(result["product_link"])
+        results = searcher.search(numeric_range_query, limit=20, sortedby="price_original")
+        # obtener los 20 primeros resultados de la búsqueda y mostrarlos en pantalla 
         print("✅ Found {} results.".format(len(results)))
-         
+        for result in results:
+            print(result["name"], result["price_original"])
+
+def search_by_size(query):
+    shezz_index = open_dir(SHEZZ_INDEX_PATH)
+    query_res = Term("sizes", query)
+
+    with shezz_index.searcher() as searcher:
+        # Realiza la búsqueda y muestra el número de resultados
+        results = searcher.search(query_res, limit=20)
+        for result in results:
+            print(result["name"], result["sizes"])
+        print("✅ Found {} results.".format(len(results)))
         
-search_by_price()
+# search_by_price_range()
+search_by_size(ARGS[1])

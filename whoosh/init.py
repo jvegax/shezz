@@ -1,7 +1,7 @@
 # Descripcion: este script genera el indice de whoosh
 
 from whoosh.index import create_in
-from whoosh.fields import Schema, TEXT, ID, NUMERIC
+from whoosh.fields import Schema, TEXT, ID, NUMERIC, KEYWORD
 import json, shutil, os, sys
 
 arguments = sys.argv
@@ -19,7 +19,7 @@ def create_index():
         category=TEXT(stored=True),
         rating=TEXT(stored=True),
         product_link=TEXT(stored=True),
-        sizes=TEXT(stored=True),
+        sizes=KEYWORD(stored=True),
         images=TEXT(stored=True)
     )
     
