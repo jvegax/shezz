@@ -1,16 +1,17 @@
 {% extends "base.html" %} {% load static %} {% block content %}
 {% include "navbar.html" %}
-<div class="resultados-container">
+<div class="resultados-body">
   <h1>✅ Coincidencias segun tus parametros: {{ matches }}</h1>
 
+  <div class="resultados-container">
   {% for product in results %}
-  <div class="resultados">
-    <div class="item">
+    <div class="item-card">
+      <img src="{{ product.images.0 }}" alt="Imagen del producto">
       <p>Nombre: {{ product.name }}</p>
       <a href="{{ product.product_link }}">Link del producto</a>
-      <p>Precio: {{ product.price_original }}</p>
+      <p>Precio: {{ product.price_original }}€</p>
     </div>
+    {% endfor %}
   </div>
-  {% endfor %}
 </div>
 {% endblock %}

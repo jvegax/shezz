@@ -46,6 +46,7 @@ def search_by_size(query):
 
 def combinated_search(name_query, size_query, min_price, max_price):
     matches = []
+    num_matches = 0
     # Abrimos el índice Whoosh
     shezz_index = open_dir(SHEZZ_INDEX_PATH)
 
@@ -64,7 +65,7 @@ def combinated_search(name_query, size_query, min_price, max_price):
     with shezz_index.searcher() as searcher:
         results = searcher.search(
             combined_query, limit=20, sortedby="price_original")
-        print(f"✅ Found {len(results)} results.")
+        num_matches = len(results)
         for result in results:
             new_match = {
                 "name": result["name"],
@@ -76,7 +77,7 @@ def combinated_search(name_query, size_query, min_price, max_price):
             }
             matches.append(new_match)
     
-    return matches
+    return matches, num_matches
 
 
 # search_by_price_range()

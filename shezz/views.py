@@ -17,10 +17,10 @@ def resultados(request):
             talla = form.cleaned_data["talla"]
             precio_desde = form.cleaned_data["precio_desde"]
             precio_hasta = form.cleaned_data["precio_hasta"]
-            results = combinated_search(palabras_clave, talla, precio_desde, precio_hasta)
-            return render(request, "resultados.html", {"results": results, "matches": len(results)})
+            results, num_matches = combinated_search(
+                palabras_clave, talla, precio_desde, precio_hasta)
+            return render(request, "resultados.html", {"results": results, "matches": num_matches})
         else:
             print("❌ Formulario no válido")
     else:
         return render(request, "resultados.html", {"results": None, "matches": 0})
-            
