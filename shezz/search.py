@@ -8,6 +8,18 @@ ARGS = sys.argv
 SHEZZ_INDEX_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/whoosh/Index'
 
 
+def normlize_name_length(name):
+    if len(name) > 47:
+        return name[:47] + "..."
+    else:
+        return name
+
+
+def normalize_sizes_to_string(sizes):
+    # ['S', 'M', 'L'] -> 'S, M, L'
+    return ", ".join(sizes)
+
+
 def search_by_name(query):
     shezz_index = open_dir(SHEZZ_INDEX_PATH)
     query_parser = QueryParser("name", schema=shezz_index.schema)
@@ -68,15 +80,16 @@ def combinated_search(name_query, size_query, min_price, max_price):
         num_matches = len(results)
         for result in results:
             new_match = {
-                "name": result["name"],
+                "name": normlize_name_length(result["name"]),
                 "price_original": result["price_original"],
                 "price_discount": result["price_discount"],
-                "sizes": result["sizes"],
+                "sizes": normalize_sizes_to_string(result["sizes"]),
                 "product_link": result["product_link"],
-                "images": result["images"]
+                "images": result["images"],
+                "rating": result["rating"],
             }
             matches.append(new_match)
-    
+
     return matches, num_matches
 
 

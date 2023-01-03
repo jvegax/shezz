@@ -1,15 +1,21 @@
-{% extends "base.html" %} {% load static %} {% block content %}
-{% include "navbar.html" %}
+{% extends "base.html" %} {% load static %} {% block content %} {% include "navbar.html" %}
 <div class="resultados-body">
-  <h1>✅ Coincidencias segun tus parametros: {{ matches }}</h1>
+  <h1>✅ Coincidencias según tus parametros: {{ matches }}</h1>
 
   <div class="resultados-container">
-  {% for product in results %}
+    {% for product in results %}
     <div class="item-card">
-      <img src="{{ product.images.0 }}" alt="Imagen del producto">
-      <p>Nombre: {{ product.name }}</p>
-      <a href="{{ product.product_link }}">Link del producto</a>
-      <p>Precio: {{ product.price_original }}€</p>
+      <a href="{{ product.product_link }}">
+        <img src="{{ product.images.1 }}" alt="Imagen del producto" />
+      </a>
+      <p class="name">{{ product.name }}</p>
+      <div class="item-info">
+        <p class="price">{{ product.price_original }}€</p>
+        <p class="rating">{{ product.rating }} ⭐⭐⭐⭐⭐</p>
+      </div>
+      <div class="item-info">
+        <p>Tallas {{ product.sizes }}</p>
+      </div>
     </div>
     {% endfor %}
   </div>
