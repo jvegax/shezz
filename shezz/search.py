@@ -76,7 +76,7 @@ def combinated_search(name_query, size_query, min_price, max_price):
     # Realizamos la búsqueda utilizando la consulta combinada
     with shezz_index.searcher() as searcher:
         results = searcher.search(
-            combined_query, limit=20, sortedby="price_original")
+            combined_query, limit=100, sortedby="price_original")
         num_matches = len(results)
         for result in results:
             new_match = {

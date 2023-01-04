@@ -4,19 +4,22 @@
 
   <div class="resultados-container">
     {% for product in results %}
-    <div class="item-card">
-      <a href="{{ product.product_link }}">
-        <img src="{{ product.images.1 }}" alt="Imagen del producto" />
-      </a>
-      <p class="name">{{ product.name }}</p>
-      <div class="item-info">
-        <p class="price">{{ product.price_original }}€</p>
-        <p class="rating">{{ product.rating }} ⭐⭐⭐⭐⭐</p>
+    <a href="{{ product.product_link }}" target="_blank">
+      <div class="item-card">
+        <img src="{{ product.images.0 }}" alt="Imagen del producto" />
+        <div class="item-info-container">
+          <p class="name">{{ product.name }}</p>
+          <div class="item-info">
+            <p class="price">{{ product.price_original }}€</p>
+            <p class="rating">{{ product.rating }} ⭐</p>
+          </div>
+          <div></div>
+          <div class="item-sizes">
+            <p>{{ product.sizes }}</p>
+          </div>
+        </div>
       </div>
-      <div class="item-info">
-        <p>Tallas {{ product.sizes }}</p>
-      </div>
-    </div>
+    </a>
     {% endfor %}
   </div>
 </div>

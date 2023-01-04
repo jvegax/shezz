@@ -30,7 +30,6 @@ combined_data = shein_tops + zaful_tops
 
 # Desordenamos la lista de datos combinada
 random.shuffle(combined_data)
-
 for product in combined_data:
     # Normaliza tallas
     normalized_sizes = []
