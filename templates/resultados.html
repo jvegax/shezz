@@ -9,11 +9,17 @@
         <img src="{{ product.images.0 }}" alt="Imagen del producto" />
         <div class="item-info-container">
           <p class="name">{{ product.name }}</p>
+
           <div class="item-info">
+            {% if product.price_discount == 0 %}
             <p class="price">{{ product.price_original }}€</p>
+            {% else %}
+            <p class="price">{{ product.price_discount }}€</p>
+            <p class="price-old">{{ product.price_original }}€</p>
+            {% endif %}
             <p class="rating">{{ product.rating }} ⭐</p>
           </div>
-          <div></div>
+
           <div class="item-sizes">
             <p>{{ product.sizes }}</p>
           </div>

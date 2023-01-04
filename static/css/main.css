@@ -295,8 +295,8 @@
 }
 
 .price-old {
-  font-size: 1.3em;
-  font-weight: 900;
+  font-size: 1em;
+  font-weight: 600;
   color: #94a8ff;
   text-decoration: line-through;
 }

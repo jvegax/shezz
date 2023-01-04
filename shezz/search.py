@@ -91,8 +91,3 @@ def combinated_search(name_query, size_query, min_price, max_price):
             matches.append(new_match)
 
     return matches, num_matches
-
-
-# search_by_price_range()
-# search_by_size(ARGS[1])
-# combinated_search(ARGS[1], ARGS[2], int(ARGS[3]), int(ARGS[4]))
