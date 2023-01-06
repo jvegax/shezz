@@ -326,7 +326,6 @@
   /* border: 3px solid #5472fb; */
 }
 
-
 /* Webmaster page */
 .webmaster-container {
   display: flex;
@@ -365,4 +364,11 @@
 /* add hover on inputs */
 .webmaster-container input:hover {
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.webmaster-message {
+  margin-top: 1em;
+  font-size: 1.2em;
+  font-weight: 900;
+  color: #60a532;
 }

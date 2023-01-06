@@ -3,9 +3,12 @@
     <h1>
         Bienvenido al panel de administración de Shezz 🔐
     </h1>
+    <h3 class="webmaster-message">
+        {{ message }}
+    </h3>
 
     <div class="webmaster-button-container">
-        <form action="/webmaster/populatedb" method="POST">
+        <form action="/webmaster/populatedb/" method="POST">
             {% csrf_token %}
             <input type="submit" value="Cargar base de datos" />
         </form>

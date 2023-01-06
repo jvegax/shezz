@@ -1,7 +1,4 @@
 from django.db import models
-from django.contrib.postgres.fields import ArrayField
-
-# Create your models here.
 
 
 class Product(models.Model):
@@ -12,6 +9,6 @@ class Product(models.Model):
     category = models.CharField(max_length=50)
     rating = models.CharField(max_length=50)
     product_link = models.URLField()
-    sizes = ArrayField(models.CharField(max_length=50))
-    images = ArrayField(models.URLField())
+    sizes = models.CharField(max_length=50)
+    images = models.URLField()
     currency = models.CharField(max_length=50)
