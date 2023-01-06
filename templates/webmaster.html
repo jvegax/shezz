@@ -1,0 +1,18 @@
+{% extends "base.html" %} {% load static %} {% block content %} {% include "navbar.html" %}
+<div class="webmaster-container">
+    <h1>
+        Bienvenido al panel de administración de Shezz 🔐
+    </h1>
+
+    <div class="webmaster-button-container">
+        <form action="/webmaster/populatedb" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Cargar base de datos" />
+        </form>
+        <form action="/webmaster/loadrs" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Cargar sistema de recomendacion" />
+        </form>
+    </div>
+</div>
+{% endblock %}
