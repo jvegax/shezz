@@ -1,15 +1,14 @@
-from django.shortcuts import render
-from .forms import ProductForm
-from shezz.models import Product
-from .search import combinated_search
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
+from shezz.search import combinated_search
+from shezz.models import Product
+from shezz.utils import loadDict
+from shezz.forms import ProductForm, ProductRecommendationForm
+from shezz.recommendations import sim_product_price_rating, topMatches, transformPrefs
 import json
+import shelve
 
 PRODUCTS_DATA_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/all-products.json'
-
-
-def is_superuser(user):
-    return user.is_superuser
 
 
 def home(request):
@@ -17,8 +16,6 @@ def home(request):
     return render(request, "home.html", {"form": form})
 
 # @login_required
-
-
 def resultados(request):
     if request.method == "POST":
         form = ProductForm(request.POST)
@@ -36,38 +33,68 @@ def resultados(request):
         return render(request, "resultados.html", {"results": None, "matches": 0})
 
 # @user_passes_test(is_superuser)
-
-
 def webmaster(request):
     return render(request, "webmaster.html")
 
 # @user_passes_test(is_superuser)
-
-
 def populatedb(request):
-    with open(PRODUCTS_DATA_PATH, 'r') as f:
-        products_data = json.load(f)
+    if request.method == "POST":
+        with open(PRODUCTS_DATA_PATH, 'r') as f:
+            products_data = json.load(f)
 
-    for product_data in products_data:
-        product = Product(
-            sku=product_data['sku'],
-            name=product_data['name'],
-            price_discount=product_data['price_discount'],
-            price_original=product_data['price_original'],
-            category=product_data['category'],
-            rating=product_data['rating'],
-            product_link=product_data['product_link'],
-            sizes=product_data['sizes'],
-            images=product_data['images'],
-            currency=product_data['currency']
-        )
-        # Guarda la instancia en la base de datos
-        product.save()
+        for product_data in products_data:
+            product = Product(
+                sku=product_data['sku'],
+                name=product_data['name'],
+                price_discount=product_data['price_discount'],
+                price_original=product_data['price_original'],
+                category=product_data['category'],
+                rating=product_data['rating'],
+                product_link=product_data['product_link'],
+                sizes=product_data['sizes'],
+                images=product_data['images'],
+                currency=product_data['currency']
+            )
+            # Guarda la instancia en la base de datos
+            product.save()
 
-    num_products = Product.objects.count()
-    return render(request, "webmaster.html", {"message": f"Se ha poblado la base de datos con {num_products} productos"})
-
+        num_products = Product.objects.count()
+        return render(request, "webmaster.html", {"message": f"Se ha poblado la base de datos con {num_products} productos"})
+    else:
+        return render(request, "webmaster.html", {"message": "No se ha poblado la base de datos"})
 
 # @user_passes_test(is_superuser)
 def loadrs(request):
-    pass
+    if request.method == "POST":
+        loadDict()
+        return render(request, "webmaster.html", {"message": "Se ha cargado correctamente el diccionario de preferencias"})
+    else:
+        return render(request, "webmaster.html", {"message": "No se ha cargado el diccionario de preferencias"})
+
+# @login_required
+def productos_similares(request):
+    formulario = ProductRecommendationForm()
+    producto = None
+    items = None
+
+    if request.method == 'POST':
+        formulario = ProductRecommendationForm(request.POST)
+
+        if formulario.is_valid():
+            idProducto = formulario.cleaned_data['idProducto']
+            producto = get_object_or_404(Product, pk=idProducto)
+            shelf = shelve.open("dataRS.dat")
+            Prefs = shelf['Prefs']
+            shelf.close()
+
+            # Calcula los productos más similares al producto con ID idProducto
+            parecidos = topMatches(Prefs, int(
+                idProducto), n=3, similarity=sim_product_price_rating)
+            productos = []
+            similaridad = []
+            for re in parecidos:
+                productos.append(Product.objects.get(pk=re[1]))
+                similaridad.append(re[0])
+            items = zip(productos, similaridad)
+
+    return render(request, 'productos_similares.html', {'formulario': formulario, 'producto': producto, 'items': items})

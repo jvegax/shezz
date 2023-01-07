@@ -10,3 +10,6 @@ class ProductForm(forms.Form):
         attrs={'placeholder': 'Precio mínimo'}), required=True)
     precio_hasta = forms.IntegerField(min_value=0, max_value=100, widget=forms.TextInput(
         attrs={'placeholder': 'Precio máximo'}), required=True)
+
+class ProductRecommendationForm(forms.Form):
+    idProducto = forms.IntegerField(label='ID del producto', min_value=1)
