@@ -2,35 +2,6 @@
 
 from math import sqrt
 
-def sim_product_price_rating(prefs, product1, product2):
-    # Crea un diccionario con los atributos de cada producto
-    prefs1 = {
-        "price": prefs[product1]["price"],
-        "rating": prefs[product1]["rating"]
-    }
-    prefs2 = {
-        "price": prefs[product2]["price"],
-        "rating": prefs[product2]["rating"]
-    }
-    
-    # Calcula la similitud entre los productos basándose en sus atributos
-    return sim_distance(prefs1, prefs2)
-
-
-def sim_product(prefs, product1, product2):
-    # Get the list of shared_items
-    si = {}
-    for item in prefs[product1]: 
-        if item in prefs[product2]: si[item] = 1
-
-        # if they have no ratings in common, return 0
-        if len(si) == 0: return 0
-
-        # Add up the squares of all the differences
-        sum_of_squares = sum([pow(prefs[product1][item] - prefs[product2][item], 2) 
-                    for item in prefs[product1] if item in prefs[product2]])
-        
-        return 1 / (1 + sum_of_squares)
 
 
 # Returns a distance-based similarity score for person1 and person2
@@ -82,13 +53,14 @@ def sim_pearson(prefs, p1, p2):
 
     return r
 
-def topMatches(prefs, product, n=5, similarity=sim_product):
-    scores = [(similarity(prefs, product, other), other) 
-                for other in prefs if other != product]
+# Returns the best matches for person from the prefs dictionary. 
+# Number of results and similarity function are optional params.
+def topMatches(prefs, person, n=5, similarity=sim_pearson):
+    scores = [(similarity(prefs, person, other), other) 
+                for other in prefs if other != person]
     scores.sort()
     scores.reverse()
     return scores[0:n]
-
 
 # Gets recommendations for a person by using a weighted average of every other user's rankings
 def getRecommendations(prefs, person, similarity=sim_pearson):

@@ -7,7 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', shezz_views.home, name='home'),
     
-    path('productos_similares/', shezz_views.productos_similares, name='mostrar_productos_similares'),
+    path('productos-similares/', shezz_views.productos_similares, name='productos_similares'),
     path('resultados/', shezz_views.resultados, name='resultados'),
     
     path('webmaster/', shezz_views.webmaster, name='webmaster'),

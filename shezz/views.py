@@ -73,11 +73,9 @@ def loadrs(request):
 
 # @login_required
 def productos_similares(request):
-    formulario = ProductRecommendationForm()
-    producto = None
-    items = None
-
     if request.method == 'POST':
+        producto = None
+        items = None
         formulario = ProductRecommendationForm(request.POST)
 
         if formulario.is_valid():
@@ -97,4 +95,7 @@ def productos_similares(request):
                 similaridad.append(re[0])
             items = zip(productos, similaridad)
 
-    return render(request, 'productos_similares.html', {'formulario': formulario, 'producto': producto, 'items': items})
+        return render(request, 'productos_similares.html', {'form': formulario, 'producto': producto, 'items': items})
+    else:
+        formulario = ProductRecommendationForm()
+        return render(request, 'productos_similares.html', {'form': formulario })

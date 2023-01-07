@@ -1,0 +1,14 @@
+{% extends "base.html" %} {% load static %} {% block content %} {% include "navbar.html" %}
+<div class="webmaster-container">
+    <h2>Encuentra productos similares segun su id</h2>
+    <div class="webmaster-button-container">
+      <form method="POST" action="/productos-similares/">
+        {% csrf_token %} {{ form.as_p }}
+        <input type="submit" value="Encontrar similares" />
+      </form>
+      {% for item in items %}
+        <p>{{ item }}</p>
+      {% endfor %}
+    </div>
+</div>
+{% endblock %}
