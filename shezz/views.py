@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, user_passes_test
 from shezz.search import combinated_search
 from shezz.models import Product
@@ -19,13 +21,48 @@ def home(request):
 
 
 def signin(request):
-    signin_form = SigninForm()
-    return render(request, "welcome.html", {"form": signin_form})
-
+    if request.method == 'POST':
+        # Obtener los datos del formulario de inicio de sesión
+        signin_form = SigninForm(request.POST)
+        # Validar la información del formulario
+        if signin_form.is_valid():
+            # Obtener la información del formulario limpia
+            username = signin_form.cleaned_data['username']
+            password = signin_form.cleaned_data['password']
+            # Verificar las credenciales del usuario
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                # Iniciar sesión
+                login(request, user)
+                # Redirigir al usuario a la página de inicio
+                return render(request, 'home.html')
+            else:
+                # Redirigir al usuario al formulario de inicio de sesión
+                return render(request, 'welcome.html', {'signin_form': signin_form, 'error': 'Usuario o contraseña incorrectos'})
+    else:
+        # Mostrar el formulario de inicio de sesión
+        signin_form = SigninForm()
+        return render(request, 'welcome.html', {'signin_form': signin_form})
 
 def signup(request):
-    signup_form = SignupForm()
-    return render(request, "welcome.html", {"form": signup_form})
+    if request.method == 'POST':
+        # Obtener los datos del formulario de registro
+        signup_form = SignupForm(request.POST)
+        # Validar la información del formulario
+        if signup_form.is_valid():
+            # Obtener la información del formulario limpia
+            username = signup_form.cleaned_data['username']
+            password = signup_form.cleaned_data['password']
+            email = signup_form.cleaned_data['email']
+            first_name = signup_form.cleaned_data['first_name']
+            last_name = signup_form.cleaned_data['last_name']
+            # Crear un nuevo usuario
+            user = User.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
+            # Iniciar sesión
+            login(request, user)
+            # Redirigir al usuario a la página de inicio
+            return redirect('index')
+
 
 # @login_required
 def resultados(request):
