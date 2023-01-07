@@ -74,7 +74,7 @@
   flex: 0.4;
   color: #5472fb;
   padding: 2rem;
-  border: 1px solid #4f030c;
+  /* border: 1px solid #4f030c; */
 }
 
 .right-container a {
@@ -371,4 +371,60 @@
   font-size: 1.2em;
   font-weight: 900;
   color: #60a532;
+}
+
+
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2em;
+  height: 100vh;
+}
+
+.signup-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 360px;
+  height: 3rem;
+  color: #fff;
+  background-color: #5472fb;
+  border-radius: 5px;
+  padding: 0 1rem;
+  font-size: 1.3em;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  margin-top: 1em;
+  text-decoration: none;
+}
+
+.signup-button:hover {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.signin-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 360px;
+  height: 3rem;
+  color: #5472fb;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 0 2rem;
+  font-size: 1.3em;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  margin-top: 1em;
+  text-decoration: none;
+}
+
+.signin-button:hover {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }

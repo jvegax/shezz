@@ -4,7 +4,7 @@ from shezz.search import combinated_search
 from shezz.models import Product
 from shezz.utils import loadDict
 from shezz.forms import ProductForm, ProductRecommendationForm
-from shezz.recommendations import sim_product_price_rating, topMatches, transformPrefs
+from shezz.recommendations import sim_distance, topMatches, transformPrefs
 import json
 import shelve
 
@@ -13,7 +13,7 @@ PRODUCTS_DATA_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/al
 
 def home(request):
     form = ProductForm()
-    return render(request, "home.html", {"form": form})
+    return render(request, "welcome.html", {"form": form})
 
 # @login_required
 def resultados(request):
@@ -87,7 +87,7 @@ def productos_similares(request):
 
             # Calcula los productos más similares al producto con ID idProducto
             parecidos = topMatches(Prefs, int(
-                idProducto), n=3, similarity=sim_product_price_rating)
+                idProducto), n=3, similarity=sim_distance)
             productos = []
             similaridad = []
             for re in parecidos:

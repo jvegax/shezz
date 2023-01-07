@@ -1,0 +1,33 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="main-container">
+  <div class="left-container">
+    <div class="logo-container">
+      <img
+        class="main-logo-img"
+        src="{% static 'img/brand/main-logo-white.png' %}"
+        alt="Shezz"
+      />
+    </div>
+    <div class="description-container">
+      <p>
+        ✨ A un solo clic de obtener
+        <span>los mejores chollos y ofertas</span> en vestidos, tops, zapatillas
+        y muchos más... ✨
+      </p>
+    </div>
+    <div class="steps-container">
+      <img
+        class="main-logo-img"
+        src="{% static 'img/precios-wallpaper.png' %}"
+        alt="Shezz"
+      />
+    </div>
+  </div>
+  <div class="right-container">
+    <div class="top-container"><h1>Bienvenido a Shezz 🎉</h1></div>
+      <div class="middle-container">
+        <a href="/signup/" class="signup-button"> Registrarse </a>
+        <a href="/signin/" class="signin-button"> Iniciar sesión </a>
+  </div>
+</div>
+{% endblock %}
