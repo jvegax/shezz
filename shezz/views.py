@@ -1,10 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, user_passes_test
 from shezz.search import combinated_search
 from shezz.models import Product
-from shezz.utils import loadDict
+from shezz.utils import is_superuser, loadDict
 from shezz.forms import ProductForm, ProductRecommendationForm, SigninForm, SignupForm
 from shezz.recommendations import sim_distance, topMatches, transformPrefs
 import json
@@ -15,10 +15,15 @@ PRODUCTS_DATA_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/al
 
 def home(request):
     if request.user.is_authenticated:
-        return render(request, "home.html")
+        form = ProductForm()
+        return render(request, "home.html", {'form': form})
     else:
         return render(request, "welcome.html")
 
+def signout(request):
+    logout(request)
+    return render(request, "welcome.html")
+    
 
 def signin(request):
     if request.method == 'POST':
@@ -35,7 +40,8 @@ def signin(request):
                 # Iniciar sesión
                 login(request, user)
                 # Redirigir al usuario a la página de inicio
-                return render(request, 'home.html')
+                form = ProductForm()
+                return render(request, 'home.html', {'form': form})
             else:
                 # Redirigir al usuario al formulario de inicio de sesión
                 return render(request, 'welcome.html', {'signin_form': signin_form, 'error': 'Usuario o contraseña incorrectos'})
@@ -43,6 +49,7 @@ def signin(request):
         # Mostrar el formulario de inicio de sesión
         signin_form = SigninForm()
         return render(request, 'welcome.html', {'signin_form': signin_form})
+
 
 def signup(request):
     if request.method == 'POST':
@@ -57,14 +64,20 @@ def signup(request):
             first_name = signup_form.cleaned_data['first_name']
             last_name = signup_form.cleaned_data['last_name']
             # Crear un nuevo usuario
-            user = User.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
+            user = User.objects.create_user(
+                username=username, password=password, email=email, first_name=first_name, last_name=last_name)
             # Iniciar sesión
             login(request, user)
             # Redirigir al usuario a la página de inicio
-            return redirect('index')
+            form = ProductForm()
+            return render(request, 'home.html', {'form': form})
+    else:
+        # Mostrar el formulario de registro
+        signup_form = SignupForm()
+        return render(request, 'welcome.html', {'signup_form': signup_form})
 
 
-# @login_required
+@login_required
 def resultados(request):
     if request.method == "POST":
         form = ProductForm(request.POST)
@@ -81,11 +94,11 @@ def resultados(request):
     else:
         return render(request, "resultados.html", {"results": None, "matches": 0})
 
-# @user_passes_test(is_superuser)
+@user_passes_test(is_superuser)
 def webmaster(request):
     return render(request, "webmaster.html")
 
-# @user_passes_test(is_superuser)
+@user_passes_test(is_superuser)
 def populatedb(request):
     if request.method == "POST":
         with open(PRODUCTS_DATA_PATH, 'r') as f:
@@ -112,7 +125,7 @@ def populatedb(request):
     else:
         return render(request, "webmaster.html", {"message": "No se ha poblado la base de datos"})
 
-# @user_passes_test(is_superuser)
+@user_passes_test(is_superuser)
 def loadrs(request):
     if request.method == "POST":
         loadDict()
@@ -120,7 +133,7 @@ def loadrs(request):
     else:
         return render(request, "webmaster.html", {"message": "No se ha cargado el diccionario de preferencias"})
 
-# @login_required
+@login_required
 def productos_similares(request):
     if request.method == 'POST':
         producto = None

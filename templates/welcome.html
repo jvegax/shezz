@@ -33,12 +33,13 @@
       {% if signup_form %}
       <form action="/signup/" method="POST">
         {% csrf_token %} {{ signup_form.as_p }}
-        <button type="submit">Entrar</button>
-      </form>
-      {% elif signin_form %}
-      <form action="/signin/" method="POST">
-        {% csrf_token %} {{ signup_form.as_p }}
         <button type="submit">Registrarme</button>
+      </form>
+      {% endif %} 
+      {% if signin_form %}
+      <form action="/signin/" method="POST">
+        {% csrf_token %} {{ signin_form.as_p }}
+        <button type="submit">Entrar</button>
       </form>
       {% endif %}
     </div>

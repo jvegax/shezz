@@ -8,6 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('signin/', shezz_views.signin, name='signin'),
     path('signup/', shezz_views.signup, name='signup'),
+    path('logout/', shezz_views.signout, name='logout'),
     
     path('productos-similares/', shezz_views.productos_similares, name='productos_similares'),
     path('resultados/', shezz_views.resultados, name='resultados'),
