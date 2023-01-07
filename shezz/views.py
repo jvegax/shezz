@@ -1,9 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from shezz.search import combinated_search
 from shezz.models import Product
 from shezz.utils import loadDict
-from shezz.forms import ProductForm, ProductRecommendationForm
+from shezz.forms import ProductForm, ProductRecommendationForm, SigninForm, SignupForm
 from shezz.recommendations import sim_distance, topMatches, transformPrefs
 import json
 import shelve
@@ -12,8 +12,20 @@ PRODUCTS_DATA_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/al
 
 
 def home(request):
-    form = ProductForm()
-    return render(request, "welcome.html", {"form": form})
+    if request.user.is_authenticated:
+        return render(request, "home.html")
+    else:
+        return render(request, "welcome.html")
+
+
+def signin(request):
+    signin_form = SigninForm()
+    return render(request, "welcome.html", {"form": signin_form})
+
+
+def signup(request):
+    signup_form = SignupForm()
+    return render(request, "welcome.html", {"form": signup_form})
 
 # @login_required
 def resultados(request):
@@ -98,4 +110,4 @@ def productos_similares(request):
         return render(request, 'productos_similares.html', {'form': formulario, 'producto': producto, 'items': items})
     else:
         formulario = ProductRecommendationForm()
-        return render(request, 'productos_similares.html', {'form': formulario })
+        return render(request, 'productos_similares.html', {'form': formulario})

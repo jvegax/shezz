@@ -24,10 +24,19 @@
     </div>
   </div>
   <div class="right-container">
-    <div class="top-container"><h1>Bienvenido a Shezz 🎉</h1></div>
-      <div class="middle-container">
-        <a href="/signup/" class="signup-button"> Registrarse </a>
-        <a href="/signin/" class="signin-button"> Iniciar sesión </a>
+    <div class="top-container">
+      <h1>Bienvenido a Shezz 🎉</h1>
+    </div>
+    <div class="middle-container">
+      <a href="/signup/" class="signup-button"> Registrarse </a>
+      <a href="/signin/" class="signin-button"> Iniciar sesión </a>
+
+      <form action="">
+        {% csrf_token %} {{ form.as_p }}
+        
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
   </div>
 </div>
 {% endblock %}

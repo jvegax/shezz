@@ -423,6 +423,7 @@
   outline: none;
   margin-top: 1em;
   text-decoration: none;
+  border: 1px solid #5472fb;
 }
 
 .signin-button:hover {
