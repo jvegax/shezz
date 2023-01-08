@@ -5,7 +5,7 @@ from whoosh.query import NumericRange, Term, And
 import sys
 
 ARGS = sys.argv
-SHEZZ_INDEX_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/whoosh/Index'
+SHEZZ_INDEX_PATH = 'whoosh/Index'
 
 
 def normlize_name_length(name):
