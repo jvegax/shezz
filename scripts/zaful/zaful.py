@@ -13,8 +13,8 @@ ssl._create_default_https_context = ssl._create_unverified_context
 CHROME_DRIVER_PATH = '/usr/local/bin/chromedriver'
 service = Service(CHROME_DRIVER_PATH)
 
-ZAFUL_TOPS_LINKS_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/zaful/links.json'
-ZAFUL_TOPS_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/zaful/zaful-tops.json'
+ZAFUL_TOPS_LINKS_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/zaful/links-tops-zaful.json'
+ZAFUL_TOPS_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/zaful/tops-zaful.json'
 
 ZAFUL_ITEM_NAME_CLASS = 'js-goods-title goods-text'  # h1
 ZAFUL_ITEM_SKU_CLASS = 'sku'  # p > find first span > get text value (sku)
@@ -51,8 +51,6 @@ with open(ZAFUL_TOPS_LINKS_PATH, 'r') as file:
 
     # Itera sobre cada enlace
     for link in links:
-        if counter == 1000:
-            break
         NEW_ZAFUL_TOP = {}
 
         # Driver configuration
@@ -141,8 +139,8 @@ with open(ZAFUL_TOPS_LINKS_PATH, 'r') as file:
             'images': images
         }
         ALL_ZAFUL_TOPS.append(NEW_ZAFUL_TOP)
-        print(f'✨ New product added ({counter+1}) ✨')
         counter += 1
+        print(f'✨ New product added ({counter}) ✨')
 
     # Cerramos el driver
     # Close driver and links file

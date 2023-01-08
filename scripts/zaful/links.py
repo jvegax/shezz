@@ -7,14 +7,14 @@ import json
 ssl._create_default_https_context = ssl._create_unverified_context
 
 CHROME_DRIVER_PATH = '/usr/local/bin/chromedriver'
-LINKS_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/zaful/links.json'
+LINKS_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/zaful/links-tops-zaful.json'
 
 ZAFUL_TOPS_CONTAINER_CLASS = 'proList clearfix goods-proList-b'  # div
 ZAFUL_TOPS_UL_CLASS = 'clearfix'  # ul inside div
 ZAFUL_TOP_LI_CLASS = 'js_proList_item logsss_event_ps'  # li
 ZAFUL_ITEM_LINK_CLASS = 'pic js_list_link pr logsss_event_cl'  # a inside li
 
-PAGES = 20
+PAGES = 35
 
 
 # Abrimos el archivo en modo escritura

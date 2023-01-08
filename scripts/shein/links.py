@@ -7,9 +7,9 @@ import json
 ssl._create_default_https_context = ssl._create_unverified_context
 
 SHEIN_HOST = 'https://es.shein.com'
-LINKS_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/shezz/data/links.json'
+LINKS_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/shein/links-tops-shein.json'
 
-PAGES = 20
+PAGES = 35
 SHEIN_TOPS_URL = 'https://es.shein.com/Women-Tops,-Blouses-Tee-c-1766.html?ici=es_tab01navbar04menu02&scici=navbar_WomenHomePage~~tab01navbar04menu02~~4_2~~real_1766~~~~0&src_module=topcat&src_tab_page_id=page_goods_detail1672330485398&src_identifier=fc%3DWomen%60sc%3DROPA%60tc%3DTOPS%60oc%3D0%60ps%3Dtab01navbar04menu02%60jc%3Dreal_1766&srctype=category&userpath=category-ROPA-TOPS'
 
 
@@ -51,3 +51,5 @@ def scrap_links_tops_shein():
     # Write links to file
     with open(LINKS_PATH, 'w') as file:
         json.dump(links, file, indent=4)
+
+scrap_links_tops_shein()

@@ -14,7 +14,8 @@ ssl._create_default_https_context = ssl._create_unverified_context
 CHROME_DRIVER_PATH = '/usr/local/bin/chromedriver'
 service = Service(CHROME_DRIVER_PATH)
 
-SHEIN_TOPS_LINKS_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/links-tops-shein.json'
+SHEIN_TOPS_LINKS_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/shein/links-tops-shein.json'
+SHEIN_TOPS_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/shein/tops-shein.json'
 
 SHEIN_ITEM_NAME_CLASS = 'product-intro__head-name'  # h1
 SHEIN_ITEM_SKU_CLASS = 'product-intro__head-sku'  # div
@@ -56,8 +57,6 @@ with open(SHEIN_TOPS_LINKS_PATH, 'r') as file:
 
 # Itera sobre cada enlace
 for link in links:
-    if counter == 1000:
-        break
     NEW_SHEIN_TOP = {}
 
     # Driver configuration
@@ -150,8 +149,8 @@ for link in links:
         'images': images
     }
     ALL_SHEIN_TOPS.append(NEW_SHEIN_TOP)
-    print(f'✨ New top added 😎 ({counter+1}) ✨')
     counter += 1
+    print(f'✨ New top added 😎 ({counter}) ✨')
 
 # Cerramos el driver
 # Close driver and links file
@@ -159,6 +158,6 @@ driver.close()
 driver.quit()
 
 # Abrir un archivo para escritura
-with open('tops.json', 'w') as tops_file:
+with open(SHEIN_TOPS_PATH, 'w') as tops_file:
     # Escribir la lista en el archivo como una cadena JSON
     json.dump(ALL_SHEIN_TOPS, tops_file, indent=2)
