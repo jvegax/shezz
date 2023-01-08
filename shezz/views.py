@@ -10,7 +10,7 @@ from shezz.recommendations import sim_distance, topMatches, transformPrefs
 import json
 import shelve
 
-PRODUCTS_DATA_PATH = '/Users/jvegax/projects/python/shezz-env/shezz-repo/data/all-products.json'
+PRODUCTS_DATA_PATH = 'data/all-products.json'
 
 
 def home(request):
